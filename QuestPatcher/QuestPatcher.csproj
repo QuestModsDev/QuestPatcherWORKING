@@ -1,0 +1,88 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>Assets\questpatcher-logo.ico</ApplicationIcon>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <AvaloniaNameGeneratorIsEnabled>false</AvaloniaNameGeneratorIsEnabled>
+  </PropertyGroup>
+
+  <Target Name="SetVersionFromFile" BeforeTargets="BeforeBuild">
+    <ReadLinesFromFile File="../VERSION">
+      <Output TaskParameter="Lines" ItemName="VersionFileContent" />
+    </ReadLinesFromFile>
+    <PropertyGroup>
+      <Version>@(VersionFileContent)</Version>
+    </PropertyGroup>
+
+    <Message Text="Setting version to content of version file (@(VersionFileContent))" Importance="High" />
+  </Target>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputType>WinExe</OutputType>
+    <DebugType>embedded</DebugType>
+    <SelfContained>true</SelfContained>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CFBundleName>QuestPatcher</CFBundleName>
+    <CFBundleDisplayName>QuestPatcher</CFBundleDisplayName>
+    <CFBundleIdentifier>com.lauriethefish.QuestPatcher</CFBundleIdentifier>
+    <CFBundleVersion>1.0.0</CFBundleVersion>
+    <CFBundleShortVersionString>1.0.0</CFBundleShortVersionString>
+    <CFBundlePackageType>APPL</CFBundlePackageType>
+    <CFBundleSignature>????</CFBundleSignature>
+    <CFBundleExecutable>QuestPatcher</CFBundleExecutable>
+    <CFBundleIconFile>iconfile.icns</CFBundleIconFile> 
+    <NSPrincipalClass>NSApplication</NSPrincipalClass>
+    <NSHighResolutionCapable>true</NSHighResolutionCapable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Include="Styles\**" />
+    <None Include="iconfile.icns" CopyToOutputDirectory="Always" Condition="$(RuntimeIdentifier.StartsWith('osx'))" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.1.3" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.1.3" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.1.3" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.3" />
+    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="11.1.3" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.1.3" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.3" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.1.3" />
+    <PackageReference Include="Dotnet.Bundle" Version="0.9.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QuestPatcher.Core\QuestPatcher.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="views\SelectDeviceWindow.axaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Strings.zh-hans.resx">
+      <DependentUpon>Strings.resx</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

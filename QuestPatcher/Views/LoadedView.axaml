@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:QuestPatcher.ViewModels"
+             xmlns:res="clr-namespace:QuestPatcher.Resources"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="550"
+             x:Class="QuestPatcher.Views.LoadedView"
+             DragDrop.AllowDrop="True">
+  <Design.DataContext>
+    <viewModels:LoadedViewModel />  
+  </Design.DataContext>
+  
+  <Panel>
+    <DockPanel HorizontalAlignment="Stretch">
+      <ExperimentalAcrylicBorder DockPanel.Dock="Left" Width="240" Material="{DynamicResource MainBackgroundMaterial}">
+        <StackPanel Orientation="Vertical" Margin="10 30 10 10" Spacing="3">
+          <TextBlock TextAlignment="Center" Text="{Binding WelcomeText}" />
+          <TextBlock TextAlignment="Center" Text="{Binding SelectedAppText}" FontSize="10" TextTrimming="CharacterEllipsis"/>
+        </StackPanel>
+      </ExperimentalAcrylicBorder>
+        
+      <ExperimentalAcrylicBorder IsHitTestVisible="False" Material="{DynamicResource SelectedSectionBackgroundMaterial}">
+          <TextBlock Text="{Binding #TabControl.SelectedItem.Header}" Margin="40 20" FontSize="32" FontWeight="Light" />
+      </ExperimentalAcrylicBorder>
+    </DockPanel>
+    
+    <TabControl Classes="sidebar">
+      <TabItem Header="{x:Static res:Strings.SideBarHeader_Patching}" IsVisible="{Binding NeedsPatchingView}" IsSelected="{Binding !AppInfo.IsModded}">
+        <UserControl Content="{Binding PatchingView}" />
+      </TabItem>
+      <TabItem Header="{x:Static res:Strings.SideBarHeader_ModManage}" IsVisible="{Binding AppInfo.IsModded}" IsSelected="{Binding AppInfo.IsModded}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <UserControl Content="{Binding ManageModsView}" />
+      </TabItem>
+      <TabItem Header="{x:Static res:Strings.SideBarHeader_Other}" IsVisible="{Binding AppInfo.IsModded}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <UserControl Content="{Binding OtherItemsView}" />
+      </TabItem>
+      <TabItem Header="{x:Static res:Strings.SideBarHeader_Options}">
+        <UserControl Content="{Binding ToolsView}" />
+      </TabItem>
+    </TabControl>
+    
+    <StackPanel Margin="25" VerticalAlignment="Bottom" HorizontalAlignment="Left" Spacing="30">
+      <ToggleSwitch 
+          IsChecked="{Binding Config.DisplayLogs}" 
+          Content="{x:Static res:Strings.Global_DisplayLogs}"
+          OnContent="{x:Static res:Strings.Generic_On}" 
+          OffContent="{x:Static res:Strings.Generic_Off}"/>
+      <StackPanel>
+        <TextBlock Text="{Binding AppInfo.Version, StringFormat={x:Static res:Strings.LoadedAPKStatus_Version}}" FontWeight="Light" FontSize="12" />
+        <TextBlock Text="{x:Static res:Strings.LoadedAPKStatus_64bit}" IsVisible="{Binding AppInfo.Is64Bit}" FontWeight="Light" FontSize="12"/>
+        <TextBlock Text="{x:Static res:Strings.LoadedAPKStatus_32bit}" IsVisible="{Binding !AppInfo.Is64Bit}" FontWeight="Light" FontSize="12"/>
+        <TextBlock Text="{x:Static res:Strings.LoadedAPKStatus_Modded}" IsVisible="{Binding AppInfo.IsModded}" FontWeight="Light" FontSize="12" />
+        <TextBlock Text="{x:Static res:Strings.LoadedAPKStatus_NotModded}" IsVisible="{Binding !AppInfo.IsModded}" FontWeight="Light" FontSize="12" />
+
+        <TextBlock Text="{Binding Version, StringFormat={x:Static res:Strings.LoadedQPVersion}}" FontWeight="Light" FontSize="12" />
+      </StackPanel>
+    </StackPanel>
+  </Panel>
+</UserControl>
