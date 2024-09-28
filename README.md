@@ -1,3 +1,9 @@
+<div align="left">
+<img alt="Visitor Stats" 
+src="https://widgetbite.com/stats/QuestModsDev"/>  
+</div>
+
+
 # QuestPatcher
 
 QuestPatcher is a GUI based mod installer for any il2cpp unity app on the Oculus Quest that runs on Windows.
